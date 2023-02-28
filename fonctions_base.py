@@ -50,9 +50,17 @@ def centrer(objet):
     
     return(f,v,n)
 
-def homot(objet, fact):
+def homot(objet, fact, x = 1, y = 1, z = 1):
     objet_2 = centrer(objet)
     v = objet_2[1]
-    v_x = v * fact + np.mean(objet[1], axis = 0)
     
-    return(objet_2[0], v_x, objet_2[2])
+    v_x = np.array([v[:,0]]) * fact  * x
+    v_y = np.array([v[:,1]]) * fact  * y
+    v_z = np.array([v[:,2]]) * fact  * z
+    
+    v_2 = np.vstack((v_x, v_y, v_z)).T
+    n_2 = GetNormals(v_2, objet_2[0])
+    
+    
+    return(objet_2[0], v_2, n_2)
+
